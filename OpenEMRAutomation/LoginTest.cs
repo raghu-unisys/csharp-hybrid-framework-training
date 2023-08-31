@@ -10,6 +10,7 @@ using OpenQA.Selenium.Support.UI;
 using NuGet.Frameworks;
 using OpenQA.Selenium.DevTools.V113.Cast;
 using Unisys.OpenEMRAutomation.Utilities;
+using Unisys.OpenEMRAutomation.Pages;
 
 namespace Unisys.OpenEMRAutomation
 {
@@ -27,8 +28,10 @@ namespace Unisys.OpenEMRAutomation
         [Test, TestCaseSource(typeof(DataUtils), nameof(DataUtils.ValidLoginDataExcel))]
         public void ValidLoginTest(string username, string password, string language, string expectedTitle)
         {
-            driver.FindElement(By.Id("authUser")).SendKeys(username);
-            driver.FindElement(By.Id("clearPass")).SendKeys(password);
+            LoginPage loginPage = new LoginPage(driver);
+
+            loginPage.EnterUsername(username);
+            loginPage.EnterPassword(password);
             SelectElement selectLanguage = new SelectElement(driver.FindElement(By.XPath("//select[@name=\"languageChoice\"]")));
             selectLanguage.SelectByText(language);
             driver.FindElement(By.Id("login-button")).Click();
@@ -49,8 +52,10 @@ namespace Unisys.OpenEMRAutomation
 
         public void InvalidLoginTest(string username, string password, string language, string expectedError)
         {
-            driver.FindElement(By.Id("authUser")).SendKeys(username);
-            driver.FindElement(By.Id("clearPass")).SendKeys(password);
+            LoginPage loginPage = new LoginPage(driver);
+
+            loginPage.EnterUsername(username);
+            loginPage.EnterPassword(password);
             SelectElement selectLanguage = new SelectElement(driver.FindElement(By.XPath("//select[@name=\"languageChoice\"]")));
             selectLanguage.SelectByText(language);
             driver.FindElement(By.Id("login-button")).Click();
