@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Unisys.Base;
 using OpenQA.Selenium.Support.UI;
 using NuGet.Frameworks;
+using OpenQA.Selenium.DevTools.V113.Cast;
 
 namespace Unisys.OpenEMRAutomation
 {
@@ -32,6 +33,21 @@ namespace Unisys.OpenEMRAutomation
             // validating the window tite
             Assert.That(driver.Title, Is.EqualTo(expectedTitle));
 
+        }
+
+        [Test]
+        [TestCase ("saul", "saul123", "Danish", "Invalid username or password")]
+        [TestCase ("john", "john123", "Danish", "Invalid username or password")]
+        public void InvalidLoginTest(string username, string password, string language, string expectedError)
+        {
+            driver.FindElement(By.Id("authUser")).SendKeys(username);
+            driver.FindElement(By.Id("clearPass")).SendKeys(password);
+            SelectElement selectLanguage = new SelectElement(driver.FindElement(By.XPath("//select[@name=\"languageChoice\"]")));
+            selectLanguage.SelectByText(language);
+            driver.FindElement(By.Id("login-button")).Click();
+
+            string actualError = driver.FindElement(By.XPath("//p[contains(text(),'Invalid')]")).Text;
+            Assert.That(actualError, Does.Contain(expectedError));
         }
     }
 }
