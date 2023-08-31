@@ -9,6 +9,13 @@ namespace Unisys.OpenEMRAutomation.Utilities
 {
     public class DataUtils
     {
+        // method to get the data from excel into 2 d object array
+        public static object[] ValidLoginDataExcel()
+        {
+            object[] allDataSet = ExcelUtils.GetSheetIntoObjectArray("C:\\Users\\RRaghuna\\OneDrive - Unisys\\Documents\\~The Docs\\Trainings\\SeleniumC#Training\\AutomationSolution\\OpenEMRAutomation\\TestData\\open_emr_data.xlsx", "ValidLoginTest");
+            return allDataSet;
+        }
+
         // creaing a data source that we send to all the other test, we will create a 2D array
         public static object[] ValidLoginData()
         {

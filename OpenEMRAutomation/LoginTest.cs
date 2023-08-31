@@ -24,7 +24,7 @@ namespace Unisys.OpenEMRAutomation
         //[TestCase("physician", "physician", "English (Indian)", "OpenEMR")]
         
         // using the data source using object 2D array
-        [Test, TestCaseSource(typeof(DataUtils), nameof(DataUtils.ValidLoginData))]
+        [Test, TestCaseSource(typeof(DataUtils), nameof(DataUtils.ValidLoginDataExcel))]
         public void ValidLoginTest(string username, string password, string language, string expectedTitle)
         {
             driver.FindElement(By.Id("authUser")).SendKeys(username);
