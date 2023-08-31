@@ -9,6 +9,7 @@ using Unisys.Base;
 using OpenQA.Selenium.Support.UI;
 using NuGet.Frameworks;
 using OpenQA.Selenium.DevTools.V113.Cast;
+using Unisys.OpenEMRAutomation.Utilities;
 
 namespace Unisys.OpenEMRAutomation
 {
@@ -16,10 +17,14 @@ namespace Unisys.OpenEMRAutomation
     public class LoginTest : AutomationWrapper
     {
 
+        
         // TestCase will considered as an induvidual test method. This is called as Data driven Framework
-        [Test]
-        [TestCase("admin", "pass", "English (Indian)", "OpenEMR")]
-        [TestCase("physician", "physician", "English (Indian)", "OpenEMR")]
+        //[Test]
+        //[TestCase("admin", "pass", "English (Indian)", "OpenEMR")]
+        //[TestCase("physician", "physician", "English (Indian)", "OpenEMR")]
+        
+        // using the data source using object 2D array
+        [Test, TestCaseSource(typeof(DataUtils), nameof(DataUtils.ValidLoginData))]
         public void ValidLoginTest(string username, string password, string language, string expectedTitle)
         {
             driver.FindElement(By.Id("authUser")).SendKeys(username);
@@ -36,8 +41,12 @@ namespace Unisys.OpenEMRAutomation
         }
 
         [Test]
-        [TestCase ("saul", "saul123", "Danish", "Invalid username or password")]
-        [TestCase ("john", "john123", "Danish", "Invalid username or password")]
+        [TestCase("saul", "saul123", "Danish", "Invalid username or password")]
+        [TestCase("john", "john123", "Danish", "Invalid username or password")]
+        // passing the data source object
+        // Testcase using data source in this case it is the the data object 2D array
+        //[Test, TestCaseSource(nameof(ValidLoginData))]
+
         public void InvalidLoginTest(string username, string password, string language, string expectedError)
         {
             driver.FindElement(By.Id("authUser")).SendKeys(username);
