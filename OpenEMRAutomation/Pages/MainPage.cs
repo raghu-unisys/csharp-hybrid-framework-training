@@ -22,5 +22,10 @@ namespace Unisys.OpenEMRAutomation.Pages
             get { return _driver.Title; }
         }
 
+        public void ClickOnPatientsMenue()
+        {
+            _driver.FindElement(By.XPath("//div[text()='Patient']")).Click();
+        }
+
     }
 }
