@@ -30,14 +30,19 @@ namespace Unisys.OpenEMRAutomation.Pages
 
         public void SelectLanguageByText(string language)
         {
-            SelectElement selectLanguage = new SelectElement(driver.FindElement(By.XPath("//select[@name=\"languageChoice\"]")));
+            SelectElement selectLanguage = new SelectElement(_driver.FindElement(By.XPath("//select[@name=\"languageChoice\"]")));
             selectLanguage.SelectByText(language);
         }
 
         public void ClickOnLogin()
         { 
-            driver.FindElement(By.Id("login-button")).Click();
+            _driver.FindElement(By.Id("login-button")).Click();
 
+        }
+
+        public string GetInvalidErrorMessage() 
+        {
+            return _driver.FindElement(By.XPath("//p[contains(text(),'Invalid')]")).Text;
         }
     }
 }

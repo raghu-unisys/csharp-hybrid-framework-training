@@ -32,14 +32,14 @@ namespace Unisys.OpenEMRAutomation
 
             loginPage.EnterUsername(username);
             loginPage.EnterPassword(password);
-            SelectElement selectLanguage = new SelectElement(driver.FindElement(By.XPath("//select[@name=\"languageChoice\"]")));
-            selectLanguage.SelectByText(language);
-            driver.FindElement(By.Id("login-button")).Click();
+            loginPage.SelectLanguageByText(language);
+            loginPage.ClickOnLogin();
 
             // waiting for page load to complete
 
             // validating the window tite
-            Assert.That(driver.Title, Is.EqualTo(expectedTitle));
+            MainPage mainPage = new MainPage(driver);
+            Assert.That(mainPage.GetMainPageTitle, Is.EqualTo(expectedTitle));
 
         }
 
@@ -56,11 +56,10 @@ namespace Unisys.OpenEMRAutomation
 
             loginPage.EnterUsername(username);
             loginPage.EnterPassword(password);
-            SelectElement selectLanguage = new SelectElement(driver.FindElement(By.XPath("//select[@name=\"languageChoice\"]")));
-            selectLanguage.SelectByText(language);
-            driver.FindElement(By.Id("login-button")).Click();
+            loginPage.SelectLanguageByText(language);
+            loginPage.ClickOnLogin();
 
-            string actualError = driver.FindElement(By.XPath("//p[contains(text(),'Invalid')]")).Text;
+            string actualError = loginPage.GetInvalidErrorMessage();
             Assert.That(actualError, Does.Contain(expectedError));
         }
     }
