@@ -1,17 +1,21 @@
-﻿using OpenQA.Selenium;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unisys.Base;
 
 namespace Unisys.OpenEMRAutomation.Pages
 {
-    public class MainPage
+    public class MainPage : WebDriverKeywords
     {
+        private By _patientlocator = By.XPath("//div[text()='Patient']");
+
         private IWebDriver _driver;
 
-        public MainPage(IWebDriver driver)
+        public MainPage(IWebDriver driver) : base(driver)
         {
             this._driver = driver;
         }
@@ -24,7 +28,7 @@ namespace Unisys.OpenEMRAutomation.Pages
 
         public void ClickOnPatientsMenue()
         {
-            _driver.FindElement(By.XPath("//div[text()='Patient']")).Click();
+            _driver.FindElement(_patientlocator).Click();
         }
 
     }
